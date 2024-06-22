@@ -50,10 +50,12 @@ const WcSessionManager = ({ sessions, uri }: WcSessionManagerProps) => {
           sessionProposal.verifyContext.verified.validation !== 'INVALID' &&
           !sessionProposal.verifyContext.verified.isScam
         ) {
-          setAutoApprove((prev) => ({
-            ...prev,
-            [chainId]: { ...prev?.[chainId], [sessionProposal.verifyContext.verified.origin]: true },
-          }))
+          setAutoApprove((prev) => {
+            return ({
+              ...prev,
+              [chainId]: { ...prev?.[chainId], [sessionProposal.verifyContext.verified.origin]: true },
+            })
+          })
         }
 
         setOpen(false)
@@ -76,7 +78,7 @@ const WcSessionManager = ({ sessions, uri }: WcSessionManagerProps) => {
   }, [setError])
 
   // Subscribe to session proposals
-  useEffect(() => {
+  useEffect((): any => {
     if (!walletConnect) return
     return walletConnect.onSessionPropose((proposalData) => {
       setError(null)
